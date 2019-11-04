@@ -7,6 +7,7 @@ public class NpcScript : MonoBehaviour
 {
     public string name = "Default-kun";
     public string whatToSay = "Hi. Im default.";
+    public GameObject transparentMask = null;
 
     public Sprite[] sprites;
 
@@ -21,11 +22,11 @@ public class NpcScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textbox = GameObject.Find("Canvas/VNMode/Textbox");
-        textboxTextField = GameObject.Find("Canvas/VNMode/Textbox/Text");
+        textbox = GameObject.Find("FrontCanvas/Textbox");
+        textboxTextField = GameObject.Find("FrontCanvas/Textbox/Text");
 
-        namebox = GameObject.Find("Canvas/VNMode/Namebox");
-        nameboxTextField = GameObject.Find("Canvas/VNMode/Namebox/Text");
+        namebox = GameObject.Find("FrontCanvas/Namebox");
+        nameboxTextField = GameObject.Find("FrontCanvas/Namebox/Text");
     }
 
     public void speak()
@@ -53,41 +54,46 @@ public class NpcScript : MonoBehaviour
 
     public void changeSprite(int k)
     {
+        /*
         Image n = GetComponent<Image>();
         n.sprite = sprites[k];
+        */
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canSee==false)
+        if (transparentMask != null)
         {
-            Image k = GetComponent<Image>();
-
-            if (k != null)
+            if (canSee == false)
             {
-                float newAlpha = k.color.a - 0.1f;
-                if (newAlpha <= 0)
-                {
-                    newAlpha = 0;
-                }
+                RawImage k = transparentMask.GetComponent<RawImage>();
 
-                k.color = new Color(k.color.r, k.color.g, k.color.b, newAlpha);
+                if (k != null)
+                {
+                    float newAlpha = k.color.a + 0.1f;
+                    if (newAlpha >= 1)
+                    {
+                        newAlpha = 1;
+                    }
+
+                    k.color = new Color(k.color.r, k.color.g, k.color.b, newAlpha);
+                }
             }
-        }
-        else
-        {
-            Image k = GetComponent<Image>();
-
-            if (k != null)
+            else
             {
-                float newAlpha = k.color.a + 0.1f;
-                if (newAlpha >= 1)
-                {
-                    newAlpha = 1;
-                }
+                RawImage k = transparentMask.GetComponent<RawImage>();
 
-                k.color = new Color(k.color.r, k.color.g, k.color.b, newAlpha);
+                if (k != null)
+                {
+                    float newAlpha = k.color.a - 0.1f;
+                    if (newAlpha <= 0)
+                    {
+                        newAlpha = 0;
+                    }
+
+                    k.color = new Color(k.color.r, k.color.g, k.color.b, newAlpha);
+                }
             }
         }
     }
