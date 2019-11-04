@@ -6,8 +6,8 @@ public class contextSwitch : MonoBehaviour
 {
     private bool VNMode = false;
 
-    public const bool VISUAL_NOVEL_MODE = false;
-    public const bool EXPLORE_MODE = true;
+    public const bool VISUAL_NOVEL_MODE = true;
+    public const bool EXPLORE_MODE = false;
 
     public GameObject vnObj = null;
     public GameObject pzObj = null;
@@ -30,6 +30,8 @@ public class contextSwitch : MonoBehaviour
             case EXPLORE_MODE:
                 vnObj.SetActive(false);
                 pzObj.SetActive(true);
+                //take screenshot of world.
+
                 break;
             default:
                 break;
@@ -42,6 +44,8 @@ public class contextSwitch : MonoBehaviour
     {
         vnObj = GameObject.Find("VNMode");
         pzObj = GameObject.Find("PuzzleMode");
+
+        setMode(VNMode);
     }
 
     // Update is called once per frame
