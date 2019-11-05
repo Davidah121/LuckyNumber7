@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class contextSwitch : MonoBehaviour
 {
-    private bool VNMode = false;
+    public bool VNMode = false;
 
     public const bool VISUAL_NOVEL_MODE = true;
     public const bool EXPLORE_MODE = false;
@@ -30,7 +30,6 @@ public class contextSwitch : MonoBehaviour
             case EXPLORE_MODE:
                 vnObj.SetActive(false);
                 pzObj.SetActive(true);
-                //take screenshot of world.
 
                 break;
             default:
