@@ -18,6 +18,7 @@ public class NpcScript : MonoBehaviour
     private GameObject textboxTextField;
 
     public bool canSee = false;
+    public float thisAlpha = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class NpcScript : MonoBehaviour
 
         namebox = GameObject.Find("FrontCanvas/Namebox");
         nameboxTextField = GameObject.Find("FrontCanvas/Namebox/Text");
+
     }
 
     public void speak()
@@ -36,6 +38,29 @@ public class NpcScript : MonoBehaviour
 
         field = textboxTextField.GetComponent<Text>();
         field.text = whatToSay;
+    }
+
+    public void moveLeftSide()
+    {
+        Transform t = GameObject.Find("VNMode/LeftSideTransform").transform;
+        this.transform.position = t.position;
+        this.transform.rotation = t.rotation;
+        transparentMask = GameObject.Find("VNMode/FrontCanvas/LeftTransMask");
+    }
+
+    public void moveRightSide()
+    {
+        Transform t = GameObject.Find("VNMode/RightSideTransform").transform;
+        this.transform.position = t.position;
+        this.transform.rotation = t.rotation;
+
+        transparentMask = GameObject.Find("VNMode/FrontCanvas/RightTransMask");
+    }
+
+    public void moveOutScene()
+    {
+        transform.position = new Vector3(9999f, 9999f, 9999f);
+        transparentMask = null;
     }
 
     public bool isVisible()
@@ -50,6 +75,41 @@ public class NpcScript : MonoBehaviour
     public void disappear()
     {
         canSee = false;
+    }
+
+    public void disappearInstant()
+    {
+        canSee = false;
+        thisAlpha = 1f;
+        if (transparentMask != null)
+        {
+            RawImage k = transparentMask.GetComponent<RawImage>();
+
+            if (k != null)
+            {
+                k.color = new Color(k.color.r, k.color.g, k.color.b, thisAlpha);
+            }
+        }
+    }
+
+    public void appearInstant()
+    {
+        canSee = true;
+        thisAlpha = 0f;
+        if (transparentMask != null)
+        {
+            RawImage k = transparentMask.GetComponent<RawImage>();
+
+            if (k != null)
+            {
+                k.color = new Color(k.color.r, k.color.g, k.color.b, thisAlpha);
+            }
+        }
+    }
+
+    public float getAlpha()
+    {
+        return 1f-thisAlpha;
     }
 
     public void changeSprite(int k)
@@ -71,13 +131,13 @@ public class NpcScript : MonoBehaviour
 
                 if (k != null)
                 {
-                    float newAlpha = k.color.a + 0.1f;
-                    if (newAlpha >= 1)
+                    thisAlpha += 1f * Time.deltaTime;
+                    if (thisAlpha >= 1)
                     {
-                        newAlpha = 1;
+                        thisAlpha = 1;
                     }
 
-                    k.color = new Color(k.color.r, k.color.g, k.color.b, newAlpha);
+                    k.color = new Color(k.color.r, k.color.g, k.color.b, thisAlpha);
                 }
             }
             else
@@ -86,13 +146,13 @@ public class NpcScript : MonoBehaviour
 
                 if (k != null)
                 {
-                    float newAlpha = k.color.a - 0.1f;
-                    if (newAlpha <= 0)
+                    thisAlpha -= 1f * Time.deltaTime;
+                    if (thisAlpha <= 0)
                     {
-                        newAlpha = 0;
+                        thisAlpha = 0;
                     }
 
-                    k.color = new Color(k.color.r, k.color.g, k.color.b, newAlpha);
+                    k.color = new Color(k.color.r, k.color.g, k.color.b, thisAlpha);
                 }
             }
         }
