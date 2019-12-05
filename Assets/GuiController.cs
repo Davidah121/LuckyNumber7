@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GuiController : MonoBehaviour
@@ -22,25 +23,26 @@ public class GuiController : MonoBehaviour
     public TransitionScript transition = null;
     public TransitionScript2 fullTransition = null;
     public bool canChange = true;
+    public AudioSource conAudio = null;
+    public AudioSource playTimeAudio = null;
+
     int phase = -1;
     // Start is called before the first frame update
     void Start()
     {
+        conAudio = GameObject.Find("VNMode/GuiCamera/ConversationAudio").GetComponent<AudioSource>();
+        playTimeAudio = GameObject.Find("VNMode/GuiCamera/PlaytimeTheme").GetComponent<AudioSource>();
+
         transition = GameObject.Find("VNMode/FrontCanvas/Transition").GetComponent<TransitionScript>();
         fullTransition = GameObject.Find("VNMode/FrontCanvas/FullTransition").GetComponent<TransitionScript2>();
         for(int i=0; i<npcs.Length; i++)
         {
             NpcScript k = npcs[i].GetComponent<NpcScript>();
-            if (i % 2 == 1)
-                k.moveLeftSide();
-            else
-                k.moveRightSide();
-
-            k.disappearInstant();
             k.moveOutScene();
         }
         transition.appearInstant();
         fullTransition.disappearInstant();
+
     }
 
     void cutscene1()
@@ -49,6 +51,7 @@ public class GuiController : MonoBehaviour
         switch (phase)
         {
             case 0:
+
                 k = narrator.GetComponent<NpcScript>();
                 k.name = "";
                 k.whatToSay = "[Damien wakes up with blurry vision and as his vision clears up, he sees that he is in a classroom.]";
@@ -101,6 +104,9 @@ public class GuiController : MonoBehaviour
         switch (phase)
         {
             case 0:
+                if(!conAudio.isPlaying)
+                    conAudio.Play();
+
                 canChange = false;
                 transition.disappear();
                 if (transition.getAlpha() <= 0f)
@@ -313,6 +319,9 @@ public class GuiController : MonoBehaviour
 
                 break;
             case 15:
+                if (conAudio.isPlaying)
+                    conAudio.Stop();
+
                 k = narrator.GetComponent<NpcScript>();
                 k.name = "Young Voice";
                 k.whatToSay = "Tee hee! You shouldn’t be fighting each other. You should be helping each other, you sillies!";
@@ -327,6 +336,8 @@ public class GuiController : MonoBehaviour
                 k.speak();
                 break;
             case 17:
+                if (playTimeAudio.isPlaying)
+                    playTimeAudio.Stop();
                 //exit rich
                 k = npcs[5].GetComponent<NpcScript>();
                 k.disappearInstant();
@@ -544,6 +555,547 @@ public class GuiController : MonoBehaviour
                 {
                     canChange = true;
                 }
+                break;
+            case 31:
+                k = npcs[2].GetComponent<NpcScript>();
+                k.name = "Bebe";
+                k.whatToSay = "You wanna go you emo punk?!";
+                k.speak();
+
+                break;
+            case 32:
+                k = npcs[4].GetComponent<NpcScript>();
+                k.name = "Simon";
+                k.whatToSay = "Ah! I-I didn’t say anything!";
+                k.speak();
+                break;
+            case 33:
+                //exit Simon
+                k = npcs[4].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Playtime
+                k = npcs[6].GetComponent<NpcScript>();
+                k.moveRightSide();
+                k.appear();
+                k.name = "Playtime";
+                k.whatToSay = "Ahem. I believe there is still someone who hasn't introduced themselves yet.";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 34:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(We all looked at the girl with the creepy mask on her face. She hadn’t spoken since I got here.)";
+                k.speak();
+                break;
+            case 35:
+                //exit playtime
+                k = npcs[6].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Masque
+                k = npcs[3].GetComponent<NpcScript>();
+                k.moveRightSide();
+                k.appear();
+                k.name = "Masked Girl";
+                k.whatToSay = "...";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 36:
+                k = npcs[2].GetComponent<NpcScript>();
+                k.name = "Bebe";
+                k.whatToSay = "Well, say something.";
+                k.speak();
+                break;
+            case 37:
+                k = npcs[3].GetComponent<NpcScript>();
+                k.name = "Masked Girl";
+                k.whatToSay = "...";
+                k.speak();
+                break;
+            case 38:
+                //exit Masque
+                k = npcs[3].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Playtime
+                k = npcs[6].GetComponent<NpcScript>();
+                k.moveRightSide();
+                k.appear();
+                k.name = "Playtime";
+                k.whatToSay = "Well, it looks like she’s not feeling very talkative right now.  It seems she can’t give her name right now. For now, call her Masque.";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 39:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(The girl still said nothing.)";
+                k.speak();
+                break;
+            case 40:
+                //exit Bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Rich
+                k = npcs[5].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Richard";
+                k.whatToSay = "Well, now that that’s out of the way, I think you should tell us why we’re here, little girl.";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 41:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Hey, my name isn’t “little girl.” My name is Playtime! And we’re here because I am bored! I wanna play a game.";
+                k.speak();
+                break;
+            case 42:
+                //exit Rich
+                k = npcs[5].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Simon
+                k = npcs[4].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Simon";
+                k.whatToSay = "A game? Like… Monopoly?";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 43:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "No! I hate that game. We’re playing-";
+                k.speak();
+                break;
+            case 44:
+                //exit Simon
+                k = npcs[4].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Rich
+                k = npcs[5].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Rich";
+                k.whatToSay = "Badminton?";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 45:
+                //exit Rich
+                k = npcs[5].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Nona
+                k = npcs[1].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Nona";
+                k.whatToSay = "Trivia?";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 46:
+                //exit Nona
+                k = npcs[1].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Bebe";
+                k.whatToSay = "Parcheesi?";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 47:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "No no no! Let me say it in Spanish: No! We’re playing a special game I like to call the Butterfly Game!";
+                k.speak();
+                break;
+            case 48:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "The Butterfly Game?";
+                k.speak();
+                break;
+            case 49:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Heehee, I’m glad you asked, Damien. Just like before, I’m going to have you go through a series of puzzle rooms. Each of those rooms holds the key to the next room. At the very end, you’ll find the Butterfly Key which will unlock the Butterfly Door. Then, you’ll be able to leave.";
+                k.speak();
+                break;
+            case 50:
+                //exit Bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Nona
+                k = npcs[1].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Nona";
+                k.whatToSay = "How many rooms are there?";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 51:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "That's a secret. Heehee.";
+                k.speak();
+                break;
+            case 52:
+                //exit Nona
+                k = npcs[1].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Phil
+                k = npcs[0].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Phil";
+                k.whatToSay = "Will we be given food or water?";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 53:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Sorry. I’m a terrible cook. I could never make edible food for you.";
+                k.speak();
+                break;
+            case 54:
+                k = npcs[0].GetComponent<NpcScript>();
+                k.name = "Phil";
+                k.whatToSay = "Tch.";
+                k.speak();
+                break;
+            case 55:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Of course, there’s another way out.";
+                k.speak();
+                break;
+            case 56:
+                //exit Phil
+                k = npcs[0].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Bebe";
+                k.whatToSay = "Well, spit it out. My face is too pretty for these stupid puzzles.";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 57:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Well, there would be no point in a game with only one player. It would be so boring. So, if there is only one of you left, they could go.";
+                k.speak();
+                break;
+            case 58:
+                //exit Bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Nona
+                k = npcs[1].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Nona";
+                k.whatToSay = "Wait, you don't mean...";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 59:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "That’s right. If six of you die, the seventh one is allowed to leave. Whether that be accidents, murder, or if the others starve to death. The great thing about the Butterfly Game is that it can go so many ways! Although, I hope it doesn’t come to murder. I would hate to see one of you dead.";
+                k.speak();
+                break;
+            case 60:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(We all stood there frozen. The air became tense. As soon as the thought of murder entered our brains, we became immediately distrustful of each other.)";
+                k.speak();
+                break;
+            case 61:
+                //exit nona
+                k = npcs[1].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.moveLeftSide();
+                k.appear();
+                k.name = "Bebe";
+                k.whatToSay = "N-No! Don’t say that! This all just a prank, right!? I’m being punked by one of my other famous friends! You’re all just actors! Whatever they’re paying you, I’ll pay double to end this right now!";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 62:
+                //exit playtime
+                k = npcs[6].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Simon
+                k = npcs[4].GetComponent<NpcScript>();
+                k.moveRightSide();
+                k.appear();
+                k.name = "Simon";
+                k.whatToSay = "I would love to take you up on that, but I’m not an actor.";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 63:
+                //exit Simon
+                k = npcs[4].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+
+                //enter Playtime
+                k = npcs[6].GetComponent<NpcScript>();
+                k.moveRightSide();
+                k.appear();
+                k.name = "Playtime";
+                k.whatToSay = "Sorry, this is all real. This is a very real game. Oh! There is something I forgot to mention! There are two types of rooms. Single rooms like the classroom one you did and group rooms which you’ll all do together. The next one is a group room in the-";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 64:
+                k = npcs[2].GetComponent<NpcScript>();
+                k.name = "Bebe";
+                k.whatToSay = "No way! No way I’m playin this sick game you little brat. If anyone here is dying, it’s gonna be you!";
+                k.speak();
+                break;
+            case 65:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(At that moment, Bebe lunged for Playtime and quickly pinned her to the ground. I can feel her murderous intent from here.)";
+                k.speak();
+                break;
+            case 66:
+                k = npcs[2].GetComponent<NpcScript>();
+                k.name = "Bebe";
+                k.whatToSay = "Now you better let us out of here before I take your other eye out, you little freak!";
+                k.speak();
+                break;
+            case 67:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Aw, Bebe. That’s not a very good idea.";
+                k.speak();
+                break;
+            case 68:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(At that moment, two automated machine guns descended from the ceiling and aimed directly at Bebe. She immediately jumped back.)";
+                k.speak();
+
+                k = npcs[2].GetComponent<NpcScript>();
+                k.disappearInstant();
+                k.moveOutScene();
+                break;
+            case 69:
+                k = npcs[6].GetComponent<NpcScript>();
+                k.name = "Playtime";
+                k.whatToSay = "Well, now that you know that violence against a little girl is a bad idea, let me show you to the group room. The library!";
+                k.speak();
+                break;
+            case 70:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(Playtime skips up the stairs and we skittishly follow her. Nona and Phil help a dazed Bebe off the floor. We see Playtime at the top of the stairs in front of some huge doors.)";
+                k.speak();
+
+                //exit playtime temporaraly
+                k = npcs[6].GetComponent<NpcScript>();
+                k.disappear();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 71:
+                //enter playtime again
+                k = npcs[6].GetComponent<NpcScript>();
+                k.appear();
+                k.name = "Playtime";
+                k.whatToSay = "Your next puzzle is in there! Also, I made them myself! So you can praise me for my intelligence later! Also, you’re allowed to come and go as you please. But nothing out here will help you in there so don’t get any funny ideas. Well, it’s time for me to say goodbye for now!";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 72:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(She walks away and goes through another door. I hear it lock.)";
+                k.speak();
+
+                //exit playtime
+                k = npcs[6].GetComponent<NpcScript>();
+                k.disappear();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 73:
+                //move playtime out of scene
+                k = npcs[6].GetComponent<NpcScript>();
+                k.moveOutScene();
+
+                //enter bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.moveRightSide();
+                k.appear();
+                k.name = "Bebe";
+                k.whatToSay = "I g-guess we should go in.";
+                k.speak();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 74:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "Damien";
+                k.whatToSay = "(Bebe was the first one in. The rest of us looked at each other. We were unsure of what to do but it looks like we don’t have a choice. I reluctantly push open the door.)";
+                k.speak();
+
+                //exit bebe
+                k = npcs[2].GetComponent<NpcScript>();
+                k.disappear();
+
+                canChange = false;
+                if (k.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                }
+                break;
+            case 75:
+                //transition
+
+                //switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                break;
+            case 76:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "End of chapter one. Stay tuned for the continuation in the future.";
+                k.speak();
                 break;
             default:
                 break;

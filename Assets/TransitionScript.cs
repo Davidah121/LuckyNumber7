@@ -30,7 +30,7 @@ public class TransitionScript : MonoBehaviour
     {
         canSee = false;
 
-        Image k = GetComponent<Image>();
+        RawImage k = GetComponent<RawImage>();
 
         if (k != null)
         {
@@ -42,7 +42,7 @@ public class TransitionScript : MonoBehaviour
     public void appearInstant()
     {
         canSee = true;
-        Image k = GetComponent<Image>();
+        RawImage k = GetComponent<RawImage>();
 
         if (k != null)
         {
@@ -53,7 +53,7 @@ public class TransitionScript : MonoBehaviour
 
     public float getAlpha()
     {
-        Image k = GetComponent<Image>();
+        RawImage k = GetComponent<RawImage>();
         return k.color.a;
     }
 
@@ -62,7 +62,7 @@ public class TransitionScript : MonoBehaviour
     {
         if (canSee == true)
         {
-            Image k = GetComponent<Image>();
+            RawImage k = GetComponent<RawImage>();
 
             if (k != null)
             {
@@ -77,7 +77,7 @@ public class TransitionScript : MonoBehaviour
         }
         else
         {
-            Image k = GetComponent<Image>();
+            RawImage k = GetComponent<RawImage>();
 
             if (k != null)
             {

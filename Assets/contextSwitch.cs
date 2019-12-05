@@ -45,8 +45,8 @@ public class contextSwitch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        vnObj = GameObject.Find("VNMode");
-        pzObj = GameObject.Find("PuzzleMode");
+        //vnObj = GameObject.Find("VNMode");
+        //pzObj = GameObject.Find("PuzzleMode");
 
         if(VNMode==VISUAL_NOVEL_MODE)
             Invoke("setPuzzleThing", 0.05f);
