@@ -12,6 +12,7 @@ public class contextSwitch : MonoBehaviour
     public GameObject vnObj = null;
     public GameObject pzObj = null;
 
+    private bool firstTime = false;
     public bool getMode()
     {
         return VNMode;
@@ -31,6 +32,15 @@ public class contextSwitch : MonoBehaviour
                 vnObj.SetActive(false);
                 pzObj.SetActive(true);
 
+                if (firstTime != true)
+                {
+                    if(!GameObject.Find("escRoomAudio").GetComponent<AudioSource>().isPlaying)
+                        GameObject.Find("escRoomAudio").GetComponent<AudioSource>().Play();
+                }
+                else
+                {
+                    firstTime = false;
+                }
                 break;
             default:
                 break;
@@ -48,8 +58,11 @@ public class contextSwitch : MonoBehaviour
         //vnObj = GameObject.Find("VNMode");
         //pzObj = GameObject.Find("PuzzleMode");
 
-        if(VNMode==VISUAL_NOVEL_MODE)
+        if (VNMode == VISUAL_NOVEL_MODE)
+        {
+            firstTime = true;
             Invoke("setPuzzleThing", 0.05f);
+        }
 
 
         setMode(EXPLORE_MODE);
@@ -58,9 +71,11 @@ public class contextSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.Space))
         {
             setMode(!getMode());
         }
+        */
     }
 }

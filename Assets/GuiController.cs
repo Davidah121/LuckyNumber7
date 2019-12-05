@@ -23,8 +23,6 @@ public class GuiController : MonoBehaviour
     public TransitionScript transition = null;
     public TransitionScript2 fullTransition = null;
     public bool canChange = true;
-    public AudioSource conAudio = null;
-    public AudioSource playTimeAudio = null;
 
     int phase = -1;
 
@@ -35,9 +33,6 @@ public class GuiController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        conAudio = GameObject.Find("VNMode/GuiCamera/ConversationAudio").GetComponent<AudioSource>();
-        playTimeAudio = GameObject.Find("VNMode/GuiCamera/PlaytimeTheme").GetComponent<AudioSource>();
-
         transition = GameObject.Find("VNMode/FrontCanvas/Transition").GetComponent<TransitionScript>();
         fullTransition = GameObject.Find("VNMode/FrontCanvas/FullTransition").GetComponent<TransitionScript2>();
         for(int i=0; i<npcs.Length; i++)
@@ -109,8 +104,12 @@ public class GuiController : MonoBehaviour
         switch (phase)
         {
             case 0:
-                if(!conAudio.isPlaying)
-                    conAudio.Play();
+                fullTransition.disappearInstant();
+                if (GameObject.Find("escRoomAudio").GetComponent<AudioSource>().isPlaying)
+                    GameObject.Find("escRoomAudio").GetComponent<AudioSource>().Stop();
+
+                if (!GameObject.Find("ConversationAudio").GetComponent<AudioSource>().isPlaying)
+                    GameObject.Find("ConversationAudio").GetComponent<AudioSource>().Play();
 
                 canChange = false;
                 transition.disappear();
@@ -324,8 +323,8 @@ public class GuiController : MonoBehaviour
 
                 break;
             case 15:
-                if (conAudio.isPlaying)
-                    conAudio.Stop();
+                if (GameObject.Find("ConversationAudio").GetComponent<AudioSource>().isPlaying)
+                    GameObject.Find("ConversationAudio").GetComponent<AudioSource>().Stop();
 
                 k = narrator.GetComponent<NpcScript>();
                 k.name = "Young Voice";
@@ -341,8 +340,8 @@ public class GuiController : MonoBehaviour
                 k.speak();
                 break;
             case 17:
-                if (playTimeAudio.isPlaying)
-                    playTimeAudio.Stop();
+                if (!GameObject.Find("PlaytimeTheme").GetComponent<AudioSource>().isPlaying)
+                    GameObject.Find("PlaytimeTheme").GetComponent<AudioSource>().Play();
                 //exit rich
                 k = npcs[5].GetComponent<NpcScript>();
                 k.disappearInstant();
@@ -1092,15 +1091,14 @@ public class GuiController : MonoBehaviour
                 }
                 break;
             case 75:
-                //transition
-
-                //switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
-                break;
-            case 76:
                 k = narrator.GetComponent<NpcScript>();
                 k.name = "";
                 k.whatToSay = "End of chapter one. Stay tuned for the continuation in the future.";
                 k.speak();
+                break;
+            case 76:
+                //crash game or something
+                Application.Quit();
                 break;
             default:
                 break;
