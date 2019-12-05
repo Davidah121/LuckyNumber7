@@ -5,6 +5,7 @@ using UnityEngine;
 public class boxHandler : MonoBehaviour, interactable
 {
     public GameObject inventory;
+    public GameObject switcher;
 
     public void interact()
     {

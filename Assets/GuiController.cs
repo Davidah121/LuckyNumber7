@@ -1102,6 +1102,35 @@ public class GuiController : MonoBehaviour
         }
     }
 
+    void cutscene3()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "Nothing of note happens.";
+
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                break;
+            default:
+                break;
+        }
+    }
+
     void nextPhase()
     {
         if (canChange == true)
