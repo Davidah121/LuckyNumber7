@@ -27,6 +27,11 @@ public class GuiController : MonoBehaviour
     public AudioSource playTimeAudio = null;
 
     int phase = -1;
+
+    public void phaseReset()
+    {
+        this.phase = 0;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -1016,7 +1021,7 @@ public class GuiController : MonoBehaviour
                 k.disappear();
 
                 canChange = false;
-                if (k.getAlpha() >= 1f)
+                if (k.getAlpha() <= 0f)
                 {
                     canChange = true;
                 }
@@ -1046,7 +1051,7 @@ public class GuiController : MonoBehaviour
                 k.disappear();
 
                 canChange = false;
-                if (k.getAlpha() >= 1f)
+                if (k.getAlpha() <= 0f)
                 {
                     canChange = true;
                 }
@@ -1081,7 +1086,7 @@ public class GuiController : MonoBehaviour
                 k.disappear();
 
                 canChange = false;
-                if (k.getAlpha() >= 1f)
+                if (k.getAlpha() <= 0f)
                 {
                     canChange = true;
                 }
@@ -1125,6 +1130,351 @@ public class GuiController : MonoBehaviour
                 break;
             case 2:
                 switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene4()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "It's a music box. It doesn't have a key, though.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene5()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "It's a wind key of some sort... not the kind you use on a door. You add it to your inventory.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene6()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "You insert the key into the music box and turn... the key locks into place, and the bumpy mechanical roll from the music box pops out of the side. You add it to your inventory.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene7()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "It's an inkwell. You could dip your fingers in it, but it's sticky. So you don't.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene8()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "On a hunch, you dip the bumpy roll from the music box into the ink. You reluctantly add the mechanical bits, covered in sticky ink, back into your inventory.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene9()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "It's a blank piece of paper.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene10()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "You roll the ink-covered mechanical bits along the blank paper, making some sort of pattern appear on it.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene11()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "The door is still locked. You beat your fist against it a few times... no luck.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene12()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "It's a note...";
+
+                k.speak();
+                break;
+            case 1:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "Anne, Bethany, Curtis, David, Emily, Freddy, Greta, Harry, and Ian need to be seated at desks.";
+
+                k.speak();
+                break;
+            case 2:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "Bethany doesn't want to sit next to, behind, or in front of a boy. Emily wants to be near the window for the sunshine. She also hates Bethany. David is bad and needs to be in the front.";
+                k.speak();
+                break;
+            case 3:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "A group of 3 boys claimed the entire back row. Curtis has a crush on Anne and wants to be put next to her. Harry always shoots spitballs at the back of Emily's head. Ian likes being close to the door.";
+                k.speak();
+                break;
+            case 4:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "Welcome to my school. Solve my first test or you'll never leave!";
+                k.speak();
+                break;
+            case 5:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 6:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene13()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "It's a keyboard... the keys won't press, no matter how hard you try.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void cutscene14()
+    {
+        NpcScript k = null;
+        switch (phase)
+        {
+            case 0:
+                k = narrator.GetComponent<NpcScript>();
+                k.name = "";
+                k.whatToSay = "You hear something unlock behind you.";
+                k.speak();
+                break;
+            case 1:
+                canChange = false;
+                fullTransition.appear();
+                if (fullTransition.getAlpha() >= 1f)
+                {
+                    canChange = true;
+                    phase += 1;
+                }
+                break;
+            case 2:
+                switcher.GetComponent<contextSwitch>().setMode(contextSwitch.EXPLORE_MODE);
+                phaseReset();
                 break;
             default:
                 break;
@@ -1151,6 +1501,42 @@ public class GuiController : MonoBehaviour
                 break;
             case 2:
                 cutscene2();
+                break;
+            case 3:
+                cutscene3();
+                break;
+            case 4:
+                cutscene4();
+                break;
+            case 5:
+                cutscene5();
+                break;
+            case 6:
+                cutscene6();
+                break;
+            case 7:
+                cutscene7();
+                break;
+            case 8:
+                cutscene8();
+                break;
+            case 9:
+                cutscene9();
+                break;
+            case 10:
+                cutscene10();
+                break;
+            case 11:
+                cutscene11();
+                break;
+            case 12:
+                cutscene12();
+                break;
+            case 13:
+                cutscene13();
+                break;
+            case 14:
+                cutscene14();
                 break;
             default:
                 break;

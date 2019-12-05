@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class doorInt : MonoBehaviour, interactable
 {
+    public GameObject switcher;
+    public GameObject guicontrol;
     public bool unlocked = false;
     private int distance;
     public int x;
@@ -19,19 +21,23 @@ public class doorInt : MonoBehaviour, interactable
         if (unlocked)
         {
             cam.transform.Translate(new Vector3(x, y, z));
-            time = 0;
-            blind = true;
-            wengis.SetActive(true);
+            switcher.GetComponent<contextSwitch>().setMode(contextSwitch.VISUAL_NOVEL_MODE);
+            guicontrol.GetComponent<GuiController>().cutsceneNumber = 2;
+            guicontrol.GetComponent<GuiController>().phaseReset();
         }
         else
         {
-            //it's locked...
+            //switcher.GetComponent<contextSwitch>().setMode(contextSwitch.VISUAL_NOVEL_MODE);
+            //guicontrol.GetComponent<GuiController>().cutsceneNumber = 11;
+            //guicontrol.GetComponent<GuiController>().phaseReset();
         }
     }
 
     public void interact(int itemcode)
     {
-        //placeholder that does nothing
+        switcher.GetComponent<contextSwitch>().setMode(contextSwitch.VISUAL_NOVEL_MODE);
+        guicontrol.GetComponent<GuiController>().cutsceneNumber = 3;
+        guicontrol.GetComponent<GuiController>().phaseReset();
     }
 
     public void Update()
