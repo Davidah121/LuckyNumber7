@@ -1,2 +1,2 @@
-# LuckyNumber7
- Game For Aurora
+# Lucky-Number-7
+ Second Try
