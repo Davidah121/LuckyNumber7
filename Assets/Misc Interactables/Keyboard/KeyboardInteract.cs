@@ -4,13 +4,28 @@ using UnityEngine;
 
 public class KeyboardInteract : MonoBehaviour, interactable
 {
+
+    public GameObject switcher;
+    public GameObject guicontrol;
+    public bool useable = false;
     public GameObject keyboard;
     public void interact()
     {
-        keyboard.SetActive(true);
+        if (useable)
+        {
+            keyboard.SetActive(true);
+        }
+        else
+        {
+            switcher.GetComponent<contextSwitch>().setMode(contextSwitch.VISUAL_NOVEL_MODE);
+            guicontrol.GetComponent<GuiController>().cutsceneNumber = 13;
+            guicontrol.GetComponent<GuiController>().phaseReset();
+        }
     }
     public void interact(int number)
     {
-        //placeholder nothing method
+        switcher.GetComponent<contextSwitch>().setMode(contextSwitch.VISUAL_NOVEL_MODE);
+        guicontrol.GetComponent<GuiController>().cutsceneNumber = 3;
+        guicontrol.GetComponent<GuiController>().phaseReset();
     }
 }

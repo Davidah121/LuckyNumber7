@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Buttong : MonoBehaviour, interactable
 {
+    public GameObject bord;
+    public GameObject switcher;
+    public GameObject guicontrol;
+
+
     public GameObject bung1;
     public GameObject bung2;
     public GameObject bung3;
@@ -43,6 +48,10 @@ public class Buttong : MonoBehaviour, interactable
         if(scrung1.checkCorrect()&& scrung2.checkCorrect() && scrung3.checkCorrect() && scrung4.checkCorrect() && scrung5.checkCorrect() && scrung6.checkCorrect() && scrung7.checkCorrect() && scrung8.checkCorrect() && scrung9.checkCorrect())
         {
             Debug.Log("YAY");
+            bord.GetComponent<KeyboardInteract>().useable = true;
+            switcher.GetComponent<contextSwitch>().setMode(contextSwitch.VISUAL_NOVEL_MODE);
+            guicontrol.GetComponent<GuiController>().cutsceneNumber = 14;
+            guicontrol.GetComponent<GuiController>().phaseReset();
         }
         else
         {
